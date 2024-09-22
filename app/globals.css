@@ -1,0 +1,245 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+:root{
+  height: 100%;
+}
+@layer demo {
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 1ch;
+    flex-wrap: wrap;
+    transition: all var(--transition);
+  }
+
+  :root {
+    --selected: hsl(262.1, 83.3%, 57.8%);
+    --transition: 0.875s;
+    --bg: light-dark(white, black);
+    --intentful: light-dark(color-mix(in lch, canvas, canvasText 15%), black);
+    --ease: linear(
+      0 0%,
+      0.6832 7.89%,
+      0.9171 11.07%,
+      1.0251 12.99%,
+      1.1058 14.9%,
+      1.1619 16.86%,
+      1.1945 18.91%,
+      1.2024 20.02%,
+      1.2043 21.18%,
+      1.1907 23.72%,
+      1.1598 26.27%,
+      1.0604 32.59%,
+      1.0172 35.84%,
+      0.9839 39.49%,
+      0.967 43.26%,
+      0.9639 45.77%,
+      0.9661 48.59%,
+      0.9963 60.54%,
+      1.0054 67.42%,
+      1 100%
+    );
+  }
+
+  label {
+    --active: 0;
+    --intent: 0;
+    --accent: color-mix(in lch, canvasText, canvas 25%);
+    --backdrop: light-dark(white, black);
+    padding: 1ch 2ch;
+    background: color-mix(in lch, canvas, canvasText calc(var(--intent) * 10%));
+    color: var(--accent);
+    border-radius: 100px;
+    border: 1px solid color-mix(in lch, var(--accent), #0000 50%);
+    display: grid;
+    grid-template-columns: auto calc(var(--active) * 20px);
+    cursor: pointer;
+    align-items: center;
+    line-height: 1.25;
+    transition: color, grid-template-columns;
+    transition-duration: calc(var(--transition) * 0.5), var(--transition);
+    transition-timing-function: var(--ease);
+    position: relative;
+    outline: 0px solid color-mix(in lch, canvas, canvasText 85%);
+    outline-offset: 2px;
+  }
+
+  label::after {
+    content: '';
+    opacity: var(--active, 0);
+    position: absolute;
+    inset: -1px;
+    border: 1px solid var(--selected);
+    background: color-mix(in lch, var(--selected), #0000 80%);
+    border-radius: 100px;
+    z-index: 2;
+    pointer-events: none;
+    transition: opacity var(--transition) var(--ease);
+  }
+
+  label span::selection {
+    background: transparent;
+  }
+
+  label:has(:focus-visible),
+  label:hover {
+    &:not(:has(:checked)) {
+      --intent: 1;
+    }
+  }
+
+  label:has(:focus-visible) {
+    outline-width: 2px;
+  }
+
+  label:has(:checked) {
+    --active: 1;
+    color: var(--selected);
+  }
+
+  label span {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  label svg {
+    opacity: var(--active, 0);
+    justify-self: flex-end;
+    position: absolute;
+    width: 100%;
+    left: 0.75ch;
+    transition-property: opacity;
+    transition-duration: var(--transition);
+    transition-timing-function: var(--ease);
+  }
+
+  form {
+    position: relative;
+  }
+
+  [type='reset'] {
+    --intent: 0;
+    position: absolute;
+    top: calc(100% + 1rem);
+    left: 50%;
+    translate: -50% 0;
+    padding: 0.75rem 1.5rem;
+    border-radius: 100px;
+    align-self: center;
+    background: color-mix(
+      in lch,
+      #0000,
+      var(--intentful) calc(var(--intent) * 25%)
+    );
+    border: 0;
+    cursor: pointer;
+    font-size: 12px;
+    color: color-mix(
+      in lch,
+      #0000,
+      canvasText calc((25 + (var(--intent) * 50)) * 1%)
+    );
+
+    transition-property: color, background;
+    transition-duration: 0.2s;
+
+    &:hover {
+      --intent: 1;
+    }
+  }
+}
+
+@layer base {
+  .gradient-text {
+    background: -webkit-linear-gradient(16deg, #4285f4 0, #9b72cb 9%, #d96570 20%, #d96570 24%, #9b72cb 35%, #4285f4 44%, #9b72cb 50%, #d96570 56%, #131314 75%, #131314 100%);
+    background: linear-gradient(74deg, #4285f4 0, #9b72cb 9%, #d96570 20%, #d96570 24%, #9b72cb 35%, #4285f4 44%, #9b72cb 50%, #d96570 56%, #131314 75%, #131314 100%);
+    background-size: 400% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 24.6 95% 53.1%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 24.6 95% 53.1%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
+    --primary: 20.5 90.2% 48.2%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
+    --destructive: 0 72.2% 50.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 20.5 90.2% 48.2%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.tool-preview {
+  height: 70vh;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+}
